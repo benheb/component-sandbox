@@ -27,6 +27,8 @@
           list-style: none;
           margin:0px;
           padding:0px;
+          margin-bottom: 4px;
+          overflow: hidden;
         }
         .color {
           cursor:pointer;
@@ -41,6 +43,7 @@
         }
       </style>
       <div id="stylist-element-container" class="{{size}}">
+        
         <h5>Fill Color</h5>
         <template if="{{size === 'small'}}">
           <ul id="stylist-element-ul-colors">
@@ -90,8 +93,10 @@
             <li class="color"></li>
           </ul>  
         </template>
+
+        <h5>Marker Size</h5>
+        <span style="float:left">1</span><span style="float:right">15</span><input on-change="{{changeSize}}" type="range" name="points" min="1" max="15">
       </div>
-      
       
     </template>
 
@@ -100,6 +105,10 @@
           changeColor: function(e) {
             var id = e.impl.target.id;
             this.fire('color-changed', {msg: '#'+id});
+          },
+          changeSize: function(e) {
+            var val = e.impl.target.value;
+            this.fire('size-changed', {msg: val});
           }
         });
     </script>

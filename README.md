@@ -2,7 +2,7 @@
 
 TODO: Write a project description
 
-> Maintained by [Brendan Heberton](https://github.com/yourname).
+> Maintained by [Brendan Heberton](https://github.com/benheb).
 
 ## Demo
 

@@ -102,8 +102,12 @@
   });
 
   document.querySelector('stylist-element').addEventListener('color-changed', function(e) {
-    console.log('event type: ', e.type, 'event message: ', e.detail.msg);
     map.getLayer(map.graphicsLayerIds[0]).renderer.symbol.color = new dojo.Color( e.detail.msg );
+    map.getLayer(map.graphicsLayerIds[0]).redraw();
+  });
+
+  document.querySelector('stylist-element').addEventListener('size-changed', function(e) {
+    map.getLayer(map.graphicsLayerIds[0]).renderer.symbol.size = e.detail.msg;
     map.getLayer(map.graphicsLayerIds[0]).redraw();
   });
 </script>
