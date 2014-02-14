@@ -1,4 +1,4 @@
-<polymer-element name="stylist-element" attributes="ramps">
+<polymer-element name="stylist-element" attributes="ramps format type">
 
     <template>
       <style>
@@ -96,14 +96,57 @@
 
     <script>
         Polymer('stylist-element', {
+          ready: function() {
+            console.log('init polymer');
+
+            //Esri Format Defaults
+            if ( this.format === "esri" && this.type === "point" ) {
+              this.esriStyle = {};
+              this.esriStyle.type = "simple";
+              this.esriStyle.symbol = {};
+              this.esriStyle.symbol.size = 6;
+              this.esriStyle.symbol.type = "esriSMS";
+              this.esriStyle.symbol.style = "esriSMSCircle";
+              this.esriStyle.symbol.color = [ 210, 105, 30, 191 ];
+              this.esriStyle.symbol.outline = {};
+              this.esriStyle.symbol.outline.color = [ 255, 255, 255, 255 ];
+              this.esriStyle.symbol.outline.style = "esriSLSSolid";
+              this.esriStyle.symbol.outline.type = "esriSLS";
+              this.esriStyle.symbol.outline.width = 0;
+            }
+
+          },
+          
           changeColor: function(e) {
             var id = e.impl.target.id;
             this.fire('color-changed', {msg: '#'+id});
+            
+            var R = hexToR("#"+id);
+            var G = hexToG("#"+id);
+            var B = hexToB("#"+id);
+
+            function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+            function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+            function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+            function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
+            this.esriStyle.symbol.color = [R, G, B, 255];
+            
+            this.updateStyle();
           },
+          
           changeSize: function(e) {
             var val = e.impl.target.value;
+            this.esriStyle.symbol.size = val;
             this.fire('size-changed', {msg: val});
+
+            this.updateStyle();
+          },
+
+          updateStyle: function() {
+            this.fire('style-changed', {msg: this.esriStyle});
           }
+
         });
     </script>
 
