@@ -2,19 +2,110 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>&lt;my-element&gt;</title>
+    <title>Polymer Stylist</title>
 
     <!-- Importing Web Component's Polyfill -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.4/platform.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.4/polymer.js"></script>
 
+    <!-- load jsapi -->
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <script src="http://js.arcgis.com/3.8/"></script>
+
     <!-- Importing Custom Elements -->
-    <link rel="import" href="src/my-element.html">
+    <link rel="import" href="src/stylist-element.html">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <style>
+      #stylist-element-container {
+        position: absolute;
+        z-index: 100;
+        left: 55px;
+        top: 55px;
+      }
+      html, body, #map {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+      }
+      .navbar {
+        margin-bottom: 0px !important;
+      }
+    </style> 
+
 </head>
 <body>
-
-    <!-- Using Custom Elements -->
-    <my-element name="Zeno"></my-element>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Component Stylist</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Stylist Component -->
+  <stylist-element size="small" ></stylist-element>
+  
+  <div id="map"></div>
 
 </body>
+
+<script>
+
+  var map;
+  require(["esri/map", "esri/renderers/SimpleRenderer", "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, SimpleRenderer, FeatureLayer) { 
+    map = new Map("map", {
+      center: [-98, 38.485],
+      zoom: 5,
+      basemap: "topo"
+    });
+
+    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
+      mode: esri.layers.FeatureLayer.MODE_ONDEMAND,
+      outFields: ["*"]
+    });
+
+    var simpleJson = {
+      "type": "simple",
+      "label": "",
+      "description": "",
+      "symbol": {
+        "color": [210,105,30,191],
+        "size": 6,
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "type": "esriSMS",
+        "style": "esriSMSCircle",
+        "outline": {
+          "color": [0,0,128,255],
+          "width": 0,
+          "type": "esriSLS",
+          "style": "esriSLSSolid"
+        }
+      }
+    }
+
+    var rend = new SimpleRenderer(simpleJson);
+    featureLayer.setRenderer( rend );
+    map.addLayer(featureLayer);
+
+  });
+
+  document.querySelector('stylist-element').addEventListener('color-changed', function(e) {
+    console.log('event type: ', e.type, 'event message: ', e.detail.msg);
+    map.getLayer(map.graphicsLayerIds[0]).renderer.symbol.color = new dojo.Color( e.detail.msg );
+    map.getLayer(map.graphicsLayerIds[0]).redraw();
+  });
+</script>
+
 </html>

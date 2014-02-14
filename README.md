@@ -20,13 +20,13 @@ TODO: Write a project description
 2. Import Custom Element:
 
     ```html
-    <link rel="import" href="src/my-element.html">
+    <link rel="import" href="src/stylist-element.html">
     ```
 
 3. Start using it!
 
     ```html
-    <my-element></my-element>
+    <stylist-element></stylist-element>
     ```
 
 ## Setup
