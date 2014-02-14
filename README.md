@@ -2,11 +2,11 @@
 
 TODO: Write a project description
 
-> Maintained by [Your Name](https://github.com/yourname).
+> Maintained by [Brendan Heberton](https://github.com/yourname).
 
 ## Demo
 
-> [Check it live](http://webcomponents.github.io/element-boilerplate).
+> [Check it live](http://benheb.github.io/component-sandbox/).
 
 ## Usage
 
