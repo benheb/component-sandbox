@@ -56,7 +56,7 @@
       }
       #style-output {
         width:100%;
-        height:400px;
+        height:200px;
       }
     </style> 
 
@@ -67,23 +67,28 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Web Component Stylist</a>
+        <a class="navbar-brand" href="#">Web Component Style Generator</a>
       </div>
     </div>
   </nav>
 
   <!-- Component Options -->
   <div id="component-options">
-    <h5>Examples Component Options</h5>
+    <h5>Component Options</h5>
+<pre>
+Attribute: ramps
+Values: one, two, three
 
-    <h6>One color ramp</h6>
+Attribute: format
+Values: esri, leaflet
+
+Attribute: type
+Values: point, polygon
+</pre>
+    <h5>Examples</h5>
+    <h6>Three color ramps, output format Esri json renderer, type point </h6>
     <code>&lt;stylist-element ramps="one" format="esri" type="point"&gt;&lt;/stylist-element&gt;</code>
 
-    <h6>Two color ramps</h6>
-    <code>&lt;stylist-element ramps="two" format="esri" type="point"&gt;&lt;/stylist-element&gt;</code>
-
-    <h6>Three color ramps</h6>
-    <code>&lt;stylist-element ramps="three" format="esri" type="point"&gt;&lt;/stylist-element&gt;</code>
     <br /><br />
     <h5>Style Output</h5>
     <textarea id="style-output"></textarea>
