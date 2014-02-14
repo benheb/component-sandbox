@@ -90,7 +90,7 @@
 
         <h5>Marker Size</h5>
         <span style="float:left">1</span><span style="float:right">20</span><input on-change="{{changeSize}}" type="range" name="points" min="1" max="20">
-        
+
       </div>
       
     </template>
@@ -101,18 +101,26 @@
 
             //Esri Format Defaults
             if ( this.format === "esri" && this.type === "point" ) {
-              this.esriStyle = {};
-              this.esriStyle.type = "simple";
-              this.esriStyle.symbol = {};
-              this.esriStyle.symbol.size = 6;
-              this.esriStyle.symbol.type = "esriSMS";
-              this.esriStyle.symbol.style = "esriSMSCircle";
-              this.esriStyle.symbol.color = [ 210, 105, 30, 191 ];
-              this.esriStyle.symbol.outline = {};
-              this.esriStyle.symbol.outline.color = [ 255, 255, 255, 255 ];
-              this.esriStyle.symbol.outline.style = "esriSLSSolid";
-              this.esriStyle.symbol.outline.type = "esriSLS";
-              this.esriStyle.symbol.outline.width = 0;
+              this.outputStyle = {};
+              this.outputStyle.type = "simple";
+              this.outputStyle.symbol = {};
+              this.outputStyle.symbol.size = 6;
+              this.outputStyle.symbol.type = "esriSMS";
+              this.outputStyle.symbol.style = "esriSMSCircle";
+              this.outputStyle.symbol.color = [ 210, 105, 30, 191 ];
+              this.outputStyle.symbol.outline = {};
+              this.outputStyle.symbol.outline.color = [ 255, 255, 255, 255 ];
+              this.outputStyle.symbol.outline.style = "esriSLSSolid";
+              this.outputStyle.symbol.outline.type = "esriSLS";
+              this.outputStyle.symbol.outline.width = 0;
+            } else if (this.format === "leaflet" && this.type === "point") {
+              this.outputStyle = {};
+              this.outputStyle.radius = 6;
+              this.outputStyle.fillColor = "#ce803d";
+              this.outputStyle.color = "#FFF";
+              this.outputStyle.weight = 0;
+              this.outputStyle.opacity = 1;
+              this.outputStyle.fillOpacity = 1;
             }
 
           },
@@ -132,9 +140,9 @@
               function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
               function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
 
-              this.esriStyle.symbol.color = [R, G, B, 255];
+              this.outputStyle.symbol.color = [R, G, B, 255];
             } else if ( this.format === "leaflet") {
-
+              this.outputStyle.fillColor = '#'+id;
             } //etc
 
             //update the style object
@@ -147,9 +155,9 @@
 
             //set size property based on current format
             if ( this.format === "esri" ) {
-              this.esriStyle.symbol.size = val;
+              this.outputStyle.symbol.size = val;
             } else if ( this.format === "leaflet") {
-
+              this.outputStyle.radius = val;
             } //etc
 
             this.updateStyle();
@@ -157,7 +165,7 @@
 
           //update the main style object and alert UI
           updateStyle: function() {
-            this.fire('style-changed', {msg: this.esriStyle});
+            this.fire('style-changed', {msg: this.outputStyle});
           }
 
         });
